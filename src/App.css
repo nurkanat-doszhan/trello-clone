@@ -3,8 +3,14 @@
 }
 
 .App-logo {
-  width: 200px;
+  width: 80px;
+  border-radius: 50px;
+  background-color: #000000;
+  padding: 10px;
+  animation:spin 3s linear infinite;
 }
+
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .main {
   background-color: #d5d5d5;

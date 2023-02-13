@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Board from './Boards/Board';
 
@@ -11,6 +11,17 @@ const rndColor = () => {
 }
 
 function App() {
+  useEffect(() => {
+    const items = { ...localStorage };
+    // console.log(board)
+    console.log(items)
+    // board.map((i, v) => {
+    //   return (
+    //     <Board key={v} title={items.value} background={items.key} />
+    //   )
+    // })
+    setBoard([{title: 'items.value', background: 'items.key'}])
+  }, [])
   const createNewBoard = (e) => {
     let color = rndColor()
     setBoard([...board, {title: inputBoardName, background: color}])
@@ -20,11 +31,11 @@ function App() {
   const [inputBoardName, setInputBoardName] = useState('')
   const [board, setBoard] = useState([
     {
-      title: 'Qax',
+      title: 'Mia 224',
       background: '515482',
     },
     {
-      title: 'Asa',
+      title: 'Asa 101',
       background: '872490',
     }
   ])
@@ -33,10 +44,10 @@ function App() {
     <div className="App">
       <div className="main">
         <div className='container'>
-          <img src='Liquid-logos_transparent_2.png' className="App-logo my-4" alt="logo" />
+          <img src='logo192.png' className="App-logo my-4" alt="logo" />
           <div className='d-flex mt-4'>
             <input className='form-control form-control-lg w-50 me-2' defaultValue={inputBoardName} onChange={e => setInputBoardName(e.target.value)} type="text" placeholder='Введите название доски' />
-            <button className='btn btn-warning btn-lg' onClick={() => createNewBoard()}>Создать доску</button>
+            <button className='btn btn-success btn-lg' onClick={() => createNewBoard()}>Создать доску</button>
           </div>
           <div className='d-flex mt-3 flex-wrap'>
             {
