@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  width: 200px;
+}
+
+.main {
+  background-color: #616ee4;
+  min-height: 100vh;
+  color: white;
+}
