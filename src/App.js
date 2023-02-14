@@ -13,15 +13,16 @@ const rndColor = () => {
 function App() {
   useEffect(() => {
     const items = { ...localStorage };
-    // console.log(board)
     console.log(items)
+    // console.log(board)
     // board.map((i, v) => {
     //   return (
     //     <Board key={v} title={items.value} background={items.key} />
     //   )
     // })
-    setBoard([{title: 'items.value', background: 'items.key'}])
+    // setBoard([{title: 'items.value', background: 'items.key'}])
   }, [])
+
   const createNewBoard = (e) => {
     let color = rndColor()
     setBoard([...board, {title: inputBoardName, background: color}])
@@ -30,14 +31,14 @@ function App() {
 
   const [inputBoardName, setInputBoardName] = useState('')
   const [board, setBoard] = useState([
-    {
-      title: 'Mia 224',
-      background: '515482',
-    },
-    {
-      title: 'Asa 101',
-      background: '872490',
-    }
+    // {
+    //   title: 'Mia 224',
+    //   background: '515482',
+    // },
+    // {
+    //   title: 'Asa 101',
+    //   background: '872490',
+    // }
   ])
 
   return (
@@ -47,10 +48,17 @@ function App() {
           <img src='logo192.png' className="App-logo my-4" alt="logo" />
           <div className='d-flex mt-4'>
             <input className='form-control form-control-lg w-50 me-2' defaultValue={inputBoardName} onChange={e => setInputBoardName(e.target.value)} type="text" placeholder='Введите название доски' />
-            <button className='btn btn-success btn-lg' onClick={() => createNewBoard()}>Создать доску</button>
+            <button className='btn btn-success btn-lg' onClick={() => createNewBoard()}
+            disabled={
+              inputBoardName !== inputBoardName.trim() || inputBoardName == ''
+              ? true : false}>Создать доску</button>
           </div>
-          <div className='d-flex mt-3 flex-wrap'>
+          <div className='d-flex mt-4 flex-wrap'>
             {
+              board.length == 0 ?
+                <h1 className='fs-1 fw-light text-black-50 mx-auto text-dark'>
+                  Empty <i className="bi-x-lg fs-3"></i>
+                </h1> :
               board.map((i, v) => {
                 return (
                   <Board key={v} title={i.title} background={i.background} />
