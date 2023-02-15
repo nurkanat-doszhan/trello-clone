@@ -11,17 +11,16 @@ const rndColor = () => {
 }
 
 function App() {
-  useEffect(() => {
-    const items = { ...localStorage };
-    console.log(items)
-    // console.log(board)
-    // board.map((i, v) => {
-    //   return (
-    //     <Board key={v} title={items.value} background={items.key} />
-    //   )
-    // })
-    // setBoard([{title: 'items.value', background: 'items.key'}])
-  }, [])
+  // useEffect(() => {
+  //   console.log(localStorage.getItem(localStorage.key(0)));
+  //   console.log(localStorage.getItem(localStorage.key(1)));
+  //   console.log(localStorage.getItem(localStorage.key(2)));
+  //   console.log(items)
+  //   for(let i = 0; i < items.length; i++) {
+  //     // setBoard([{title: localStorage[items], background: localStorage.getItem(items)}])
+  //   }
+  // }, [localStorage])
+  const items = { ...localStorage };
 
   const createNewBoard = (e) => {
     let color = rndColor()
@@ -29,16 +28,22 @@ function App() {
     localStorage.setItem(color, inputBoardName)
   }
 
+  // setBoard([{}])
+  // console.log(localStorage.length)
+
   const [inputBoardName, setInputBoardName] = useState('')
+  for(let i = 0; i < localStorage.length; i++) {
+    console.log(localStorage.getItem(localStorage.key(i)))
+  }
   const [board, setBoard] = useState([
-    // {
-    //   title: 'Mia 224',
-    //   background: '515482',
-    // },
-    // {
-    //   title: 'Asa 101',
-    //   background: '872490',
-    // }
+    {
+      title: 'Pfl', // localStorage.getItem(localStorage.key(0)),
+      background: 589410 // localStorage.key(0),
+    },
+    {
+      title: 'Vfa', // localStorage.getItem(localStorage.key(0)),
+      background: 205198 // localStorage.key(0),
+    },
   ])
 
   return (
@@ -61,7 +66,7 @@ function App() {
                 </h1> :
               board.map((i, v) => {
                 return (
-                  <Board key={v} title={i.title} background={i.background} />
+                  <Board key={v} title={i} background={i} />
                 )
               })
             }
