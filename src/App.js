@@ -11,15 +11,22 @@ const rndColor = () => {
 }
 
 function App() {
-  // useEffect(() => {
-  //   console.log(localStorage.getItem(localStorage.key(0)));
-  //   console.log(localStorage.getItem(localStorage.key(1)));
-  //   console.log(localStorage.getItem(localStorage.key(2)));
-  //   console.log(items)
-  //   for(let i = 0; i < items.length; i++) {
-  //     // setBoard([{title: localStorage[items], background: localStorage.getItem(items)}])
-  //   }
-  // }, [localStorage])
+
+  useEffect(() => {
+    for(let i=0; i<localStorage.length; i++) {
+      setBoard([...board, {
+        title: localStorage.getItem(localStorage.key(i)),
+        background: localStorage.key(i)
+      }])
+      console.log(localStorage.getItem(localStorage.key(i)), localStorage.key(i))
+    }
+    
+    // setBoard([...board, {
+    //   title: localStorage.getItem(localStorage.key(v)),
+    //   background: localStorage.key(v)
+    // }])
+  }, [])
+
   const items = { ...localStorage };
 
   const createNewBoard = (e) => {
@@ -28,23 +35,8 @@ function App() {
     localStorage.setItem(color, inputBoardName)
   }
 
-  // setBoard([{}])
-  // console.log(localStorage.length)
-
   const [inputBoardName, setInputBoardName] = useState('')
-  for(let i = 0; i < localStorage.length; i++) {
-    console.log(localStorage.getItem(localStorage.key(i)))
-  }
-  const [board, setBoard] = useState([
-    {
-      title: 'Pfl', // localStorage.getItem(localStorage.key(0)),
-      background: 589410 // localStorage.key(0),
-    },
-    {
-      title: 'Vfa', // localStorage.getItem(localStorage.key(0)),
-      background: 205198 // localStorage.key(0),
-    },
-  ])
+  const [board, setBoard] = useState([])
 
   return (
     <div className="App">
@@ -52,9 +44,11 @@ function App() {
         <div className='container'>
           <img src='logo192.png' className="App-logo my-4" alt="logo" />
           <div className='d-flex mt-4'>
-            <input className='form-control form-control-lg w-50 me-2' defaultValue={inputBoardName} onChange={e => setInputBoardName(e.target.value)} type="text" placeholder='Введите название доски' />
+            <input className='form-control form-control-lg w-50 me-2' defaultValue={inputBoardName}
+              onChange={e => setInputBoardName(e.target.value)} type="text"
+              placeholder='Введите название доски' />
             <button className='btn btn-success btn-lg' onClick={() => createNewBoard()}
-            disabled={
+              disabled={
               inputBoardName !== inputBoardName.trim() || inputBoardName == ''
               ? true : false}>Создать доску</button>
           </div>
@@ -66,7 +60,10 @@ function App() {
                 </h1> :
               board.map((i, v) => {
                 return (
-                  <Board key={v} title={i} background={i} />
+                  <Board key={v}
+                    title={localStorage.getItem(localStorage.key(v))}
+                    background={localStorage.key(v)}
+                  />
                 )
               })
             }
