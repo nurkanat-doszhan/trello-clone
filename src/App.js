@@ -11,8 +11,12 @@ const rndColor = () => {
 }
 
 function App() {
-
+  const [data, setData] = useState([]);
   useEffect(() => {
+    localStorage.setItem('dataKey', JSON.stringify(data));
+  }, [data]);
+
+  // useEffect(() => {
     // for(let i=0; i<localStorage.length; i++) {
       // setBoard([...board, {
       //   title: localStorage.getItem(localStorage.key(i)),
@@ -21,28 +25,30 @@ function App() {
       // setBoard([...board, {title: localStorage.getItem(localStorage.key(i)),
           // background: localStorage.key(i)}])
       // console.log(...board)
-    let data = localStorage.getItem('boards')
-    let arr = JSON.parse(data)
-    console.log(data)
-    return () => {
-      return 0
-    }
+    // let data = localStorage.getItem('boards')
+    // let arr = JSON.parse(data)
+    // console.log(data)
+    // return () => {
+    //   return 0
+    // }
     // }
     
     // setBoard([...board, {
     //   title: localStorage.getItem(localStorage.key(v)),
     //   background: localStorage.key(v)
     // }])
-  }, [])
+  // }, [])
 
   const createNewBoard = (e) => {
-    let color = rndColor()
-    setBoard([...board, {title: inputBoardName, background: color}])
+    // let color = rndColor()
+    // setBoard([...board, {title: inputBoardName, background: color}])
     // localStorage.setItem(color, inputBoardName)
-    setInputBoardName('')
-    let data = JSON.stringify(board)
-    let arr = JSON.parse(data)
-    localStorage.setItem('boards', data)
+    // setInputBoardName('')
+    // let data = JSON.stringify(board)
+    // let arr = JSON.parse(data)
+    // localStorage.setItem('boards', data)
+    let newData = inputBoardName
+    setData(...data, [newData])
   }
 
   const [inputBoardName, setInputBoardName] = useState('')
