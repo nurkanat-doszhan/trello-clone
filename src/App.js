@@ -4,16 +4,17 @@ import Board from './Boards/Board';
 
 const rndColor = () => {
   let newColor = '';
+  const rndWords = [ 'a', 'b', 'c', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
   for(let i = 0; i < 6; i++) {
-    newColor += Math.floor(Math.random() * 9)
+    newColor += rndWords[Math.floor(Math.random() * rndWords.length)];
   }
-  return newColor;
+  return newColor
 }
 
 function App() {
   const createNewBoard = (e) => {
-    // let color = rndColor()
-    // setBoard([...board, {title: inputBoardName, background: color}])
+    let color = rndColor()
+    setBoard([...board, {title: inputBoardName, background: color}])
   }
 
   const [inputBoardName, setInputBoardName] = useState('')
@@ -21,9 +22,6 @@ function App() {
     { title: 'N1', background: '213dd7' },
     { title: 'N2', background: 'cd42aa' },
   ])
-
-  const rndWords = new RegExp() // [A-Fa-f]
-  console.log('sdas')
 
   return (
     <div className="App">
