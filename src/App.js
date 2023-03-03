@@ -11,48 +11,19 @@ const rndColor = () => {
 }
 
 function App() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    localStorage.setItem('dataKey', JSON.stringify(data));
-  }, [data]);
-
-  // useEffect(() => {
-    // for(let i=0; i<localStorage.length; i++) {
-      // setBoard([...board, {
-      //   title: localStorage.getItem(localStorage.key(i)),
-      //   background: localStorage.key(i)
-      // }])
-      // setBoard([...board, {title: localStorage.getItem(localStorage.key(i)),
-          // background: localStorage.key(i)}])
-      // console.log(...board)
-    // let data = localStorage.getItem('boards')
-    // let arr = JSON.parse(data)
-    // console.log(data)
-    // return () => {
-    //   return 0
-    // }
-    // }
-    
-    // setBoard([...board, {
-    //   title: localStorage.getItem(localStorage.key(v)),
-    //   background: localStorage.key(v)
-    // }])
-  // }, [])
-
   const createNewBoard = (e) => {
     // let color = rndColor()
     // setBoard([...board, {title: inputBoardName, background: color}])
-    // localStorage.setItem(color, inputBoardName)
-    // setInputBoardName('')
-    // let data = JSON.stringify(board)
-    // let arr = JSON.parse(data)
-    // localStorage.setItem('boards', data)
-    let newData = inputBoardName
-    setData(...data, [newData])
   }
 
   const [inputBoardName, setInputBoardName] = useState('')
-  const [board, setBoard] = useState([])
+  const [board, setBoard] = useState([
+    { title: 'N1', background: '213dd7' },
+    { title: 'N2', background: 'cd42aa' },
+  ])
+
+  const rndWords = new RegExp() // [A-Fa-f]
+  console.log('sdas')
 
   return (
     <div className="App">
@@ -71,19 +42,18 @@ function App() {
           </div>
           <div className='d-flex mt-4 flex-wrap'>
             {
-              localStorage.length === 0 ?
+              board.length === 0 ?
                 <h1 className='fs-1 fw-light text-black-50 mx-auto text-dark'>
                   Empty <i className="bi-x-lg fs-3"></i>
                 </h1> :
-              // board.map((i, v) => {
-              //   return (
-                  <p>sas</p>
-                  // <Board key={v}
-                  //   title={localStorage.getItem(localStorage.key(v))}
-                  //   background={localStorage.key(v)}
-                  // />
-                // )
-              // })
+              board.map((i, v) => {
+                return (
+                  <Board key={v}
+                    title={i.title}
+                    background={i.background}
+                  />
+                )
+              })
             }
           </div>
         </div>
