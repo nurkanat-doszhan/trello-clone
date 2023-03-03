@@ -4,7 +4,7 @@ import Board from './Boards/Board';
 
 const rndColor = () => {
   let newColor = '';
-  const rndWords = [ 'a', 'b', 'c', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
+  const rndWords = [ 'a', 'b', 'c', 'd', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
   for(let i = 0; i < 6; i++) {
     newColor += rndWords[Math.floor(Math.random() * rndWords.length)];
   }
@@ -15,6 +15,10 @@ function App() {
   const createNewBoard = (e) => {
     let color = rndColor()
     setBoard([...board, {title: inputBoardName, background: color}])
+    const inputBoardName = JSON.parse(localStorage.getItem('inputBoardName'));
+    if (inputBoardName) {
+      setInputBoardName(inputBoardName);
+    }
   }
 
   const [inputBoardName, setInputBoardName] = useState('')
