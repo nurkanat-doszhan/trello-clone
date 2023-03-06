@@ -27,17 +27,22 @@ function App() {
     let color = rndColor()
     setBoard([...board, {title: inputBoardName, background: color}])
     localStorage.setItem(color, inputBoardName)
+    setInputBoardName('')
   }
 
   ///////////////////////////////////////////////////////////////////////
   /// ***** Доделать обновление компонента после удаления доски ***** ///
+  ///-----------------------------------------------------------------///
   /// ***** Доделать правильную сортировку после обновления стр ***** ///
   ///////////////////////////////////////////////////////////////////////
+
 
   const onDeleteHandler = (id) => {
     alert(localStorage.getItem(localStorage.key(id)))
     localStorage.removeItem(localStorage.key(id))
-    // setBoard([...board])
+    // setBoard(board.filter(board =>
+    //   board.title !== localStorage.getItem(localStorage.key(id))
+    // ))
   }
 
   return (
