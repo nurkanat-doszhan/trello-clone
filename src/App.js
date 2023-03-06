@@ -13,15 +13,26 @@ const rndColor = () => {
 function App() {
   const [inputBoardName, setInputBoardName] = useState('')
 
+  // const [n, setN] = useState([])
+
   const [board, setBoard] = useState([
-    { title: 'N1', background: '213dd7' },
-    { title: 'N2', background: 'cd42aa' },
+    // { title: 'A1', background: '287ab7' },
+    // { title: 'A2', background: 'db254c' },
   ])
 
   useEffect(() => {
+    // let oldBoard = board;
     for (let i = 0; i < localStorage.length; i++) {
-      setBoard({title: localStorage.getItem(localStorage.key(i)), background: localStorage.key(i)})
+      setBoard((board) => [
+        {
+          title: localStorage.getItem(localStorage.key(i)), background: localStorage.key(i)
+        },
+        ...board
+      ])
+      console.log(localStorage.getItem(localStorage.key(i)))
+      console.log(localStorage.key(i))
     }
+    console.log('End')
   }, [])
   
   const createNewBoard = () => {
@@ -55,11 +66,11 @@ function App() {
                 <h1 className='fs-1 fw-light text-black-50 mx-auto text-dark'>
                   Empty <i className="bi-x-lg fs-3"></i>
                 </h1> :
-              board.map((i, v) => {
+              board.map((item, value) => {
                 return (
-                  <Board key={v}
-                    title={i.title}
-                    background={i.background}
+                  <Board key={value}
+                    title={item.title}
+                    background={item.background}
                   />
                 )
               })
