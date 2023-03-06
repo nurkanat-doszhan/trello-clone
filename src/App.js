@@ -12,37 +12,32 @@ const rndColor = () => {
 }
 function App() {
   const [inputBoardName, setInputBoardName] = useState('')
-
-  // const [n, setN] = useState([])
-
-  const [board, setBoard] = useState([
-    // { title: 'A1', background: '287ab7' },
-    // { title: 'A2', background: 'db254c' },
-  ])
+  const [board, setBoard] = useState([])
 
   useEffect(() => {
-    // let oldBoard = board;
     for (let i = 0; i < localStorage.length; i++) {
-      setBoard((board) => [
-        {
-          title: localStorage.getItem(localStorage.key(i)), background: localStorage.key(i)
-        },
-        ...board
-      ])
-      console.log(localStorage.getItem(localStorage.key(i)))
-      console.log(localStorage.key(i))
+      setBoard((board) => [...board, {
+        title: localStorage.getItem(localStorage.key(i)), background: localStorage.key(i)
+      }])
     }
-    console.log('End')
   }, [])
   
   const createNewBoard = () => {
     setInputBoardName(inputBoardName);
-    console.log(inputBoardName)
     let color = rndColor()
     setBoard([...board, {title: inputBoardName, background: color}])
-    // JSON.parse(localStorage.getItem('inputBoardName'));
-    // JSON.parse(this.getItem(key));
     localStorage.setItem(color, inputBoardName)
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  /// ***** Доделать обновление компонента после удаления доски ***** ///
+  /// ***** Доделать правильную сортировку после обновления стр ***** ///
+  ///////////////////////////////////////////////////////////////////////
+
+  const onDeleteHandler = (id) => {
+    alert(localStorage.getItem(localStorage.key(id)))
+    localStorage.removeItem(localStorage.key(id))
+    // setBoard([...board])
   }
 
   return (
@@ -71,6 +66,7 @@ function App() {
                   <Board key={value}
                     title={item.title}
                     background={item.background}
+                    onClickHandler={() => onDeleteHandler(value)}
                   />
                 )
               })

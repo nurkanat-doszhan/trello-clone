@@ -1,7 +1,8 @@
 .n-card {
-  width: 225px;
+  width: 240px;
   height: 150px;
   border-radius: 7px;
+  position: relative;
   cursor: pointer;
   transition: 0.2s;
   display: flex;
@@ -9,12 +10,30 @@
   justify-content: center;
 }
 
-.n-card:hover {
-  transform: scale(1.04);
-}
-
 .n-card .card-name {
   margin-bottom: 0;
   font-size: 16px;
   font-weight: 700;
+}
+
+.n-card:hover .delete {
+  display: block;
+}
+
+.delete {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0.6;
+  display: none;
+}
+
+.delete:hover {
+  opacity: 1;
+}
+
+.delete i {
+  font-size: 1.25rem!important;
 }
