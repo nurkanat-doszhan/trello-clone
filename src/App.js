@@ -4,28 +4,35 @@ import Board from './Boards/Board';
 
 const rndColor = () => {
   let newColor = '';
-  const rndWords = [ 'a', 'b', 'c', 'd', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
+  const rndWords = [ 'a', 'b', 'c', 'd', '2', '3', '4', '5', '6', '7', '8', '9' ]
   for(let i = 0; i < 6; i++) {
     newColor += rndWords[Math.floor(Math.random() * rndWords.length)];
   }
   return newColor
 }
-
 function App() {
-  const createNewBoard = (e) => {
-    let color = rndColor()
-    setBoard([...board, {title: inputBoardName, background: color}])
-    const inputBoardName = JSON.parse(localStorage.getItem('inputBoardName'));
-    if (inputBoardName) {
-      setInputBoardName(inputBoardName);
-    }
-  }
-
   const [inputBoardName, setInputBoardName] = useState('')
+
   const [board, setBoard] = useState([
     { title: 'N1', background: '213dd7' },
     { title: 'N2', background: 'cd42aa' },
   ])
+
+  useEffect(() => {
+    for (let i = 0; i < localStorage.length; i++) {
+      setBoard({title: localStorage.getItem(localStorage.key(i)), background: localStorage.key(i)})
+    }
+  }, [])
+  
+  const createNewBoard = () => {
+    setInputBoardName(inputBoardName);
+    console.log(inputBoardName)
+    let color = rndColor()
+    setBoard([...board, {title: inputBoardName, background: color}])
+    // JSON.parse(localStorage.getItem('inputBoardName'));
+    // JSON.parse(this.getItem(key));
+    localStorage.setItem(color, inputBoardName)
+  }
 
   return (
     <div className="App">
@@ -37,7 +44,7 @@ function App() {
               type="text" defaultValue={inputBoardName}
               onChange={e => setInputBoardName(e.target.value)}
               placeholder='Введите название доски' />
-            <button className='btn btn-success btn-lg' onClick={() => createNewBoard()}
+            <button className='btn btn-success btn-lg' onClick={(e) => createNewBoard(e)}
               disabled={
               inputBoardName !== inputBoardName.trim() || inputBoardName === ''
               ? true : false}>Создать доску</button>
