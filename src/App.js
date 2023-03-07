@@ -10,6 +10,7 @@ const rndColor = () => {
   }
   return newColor
 }
+
 function App() {
   const [inputBoardName, setInputBoardName] = useState('')
   const [board, setBoard] = useState([])
@@ -23,7 +24,7 @@ function App() {
   }, [])
   
   const createNewBoard = () => {
-    setInputBoardName(inputBoardName);
+    // setInputBoardName(inputBoardName);
     let color = rndColor()
     setBoard([...board, {title: inputBoardName, background: color}])
     localStorage.setItem(color, inputBoardName)
@@ -31,18 +32,17 @@ function App() {
   }
 
   ///////////////////////////////////////////////////////////////////////
-  /// ***** Доделать обновление компонента после удаления доски ***** ///
-  ///-----------------------------------------------------------------///
   /// ***** Доделать правильную сортировку после обновления стр ***** ///
   ///////////////////////////////////////////////////////////////////////
 
 
   const onDeleteHandler = (id) => {
-    alert(localStorage.getItem(localStorage.key(id)))
-    localStorage.removeItem(localStorage.key(id))
-    // setBoard(board.filter(board =>
-    //   board.title !== localStorage.getItem(localStorage.key(id))
-    // ))
+    setTimeout(() => {
+      setBoard(board.filter(board => {
+        return board.title !== localStorage.getItem(localStorage.key(id))
+      }))
+      localStorage.removeItem(localStorage.key(id))
+    }, 200)
   }
 
   return (
@@ -71,7 +71,7 @@ function App() {
                   <Board key={value}
                     title={item.title}
                     background={item.background}
-                    onClickHandler={() => onDeleteHandler(value)}
+                    onXClickHandler={() => onDeleteHandler(value)}
                   />
                 )
               })
