@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Board from './Boards/Board';
+import { v4 as uuid } from 'uuid';
 
 const rndColor = () => {
   let newColor = '';
@@ -14,27 +15,46 @@ const rndColor = () => {
 function App() {
   const [inputBoardName, setInputBoardName] = useState('')
   const [board, setBoard] = useState([])
+  const unique_id = uuid();
+  const small_id = unique_id.slice(0,8)
 
   useEffect(() => {
     for (let i = 0; i < localStorage.length; i++) {
-      setBoard((board) => [...board, {
-        title: localStorage.getItem(localStorage.key(i)), background: localStorage.key(i)
-      }])
+      let boards = localStorage.key(i)
+      let jsonBoard = JSON.parse(boards)
+      console.log(boards)
+
+      // setBoard((board) => [...board, {
+        // id: board.id,
+        // link: board.link,
+        // title: board.title,
+        // background: board.background
+      // }])
+      // console.log(board)
     }
   }, [])
   
   const createNewBoard = () => {
-    // setInputBoardName(inputBoardName);
-    let color = rndColor()
-    setBoard([...board, {title: inputBoardName, background: color}])
-    localStorage.setItem(color, inputBoardName)
+    const color = rndColor()
+    const newBoard = {
+      id: small_id,
+      link: small_id,
+      title: inputBoardName,
+      background: color
+    }
+    const jsonBoard = JSON.stringify(newBoard)
+    setBoard([...board, {
+      id: newBoard.id,
+      link: newBoard.link,
+      title: newBoard.title,
+      background: newBoard.background,
+    }])
+
+    localStorage.setItem(newBoard.id, jsonBoard)
     setInputBoardName('')
   }
 
-  ///////////////////////////////////////////////////////////////////////
   /// ***** Доделать правильную сортировку после обновления стр ***** ///
-  ///////////////////////////////////////////////////////////////////////
-
 
   const onDeleteHandler = (id) => {
     setTimeout(() => {
@@ -69,6 +89,8 @@ function App() {
               board.map((item, value) => {
                 return (
                   <Board key={value}
+                    id={item.id}
+                    link={item.link}
                     title={item.title}
                     background={item.background}
                     onXClickHandler={() => onDeleteHandler(value)}
