@@ -20,17 +20,15 @@ function App() {
 
   useEffect(() => {
     for (let i = 0; i < localStorage.length; i++) {
-      let boards = localStorage.key(i)
+      let boards = localStorage.getItem(localStorage.key(i))
       let jsonBoard = JSON.parse(boards)
-      console.log(boards)
 
-      // setBoard((board) => [...board, {
-        // id: board.id,
-        // link: board.link,
-        // title: board.title,
-        // background: board.background
-      // }])
-      // console.log(board)
+      setBoard((board) => [...board, {
+        id: jsonBoard.id,
+        link: jsonBoard.link,
+        title: jsonBoard.title,
+        background: jsonBoard.background
+      }])
     }
   }, [])
   
@@ -59,7 +57,7 @@ function App() {
   const onDeleteHandler = (id) => {
     setTimeout(() => {
       setBoard(board.filter(board => {
-        return board.title !== localStorage.getItem(localStorage.key(id))
+        return board.id !== id
       }))
       localStorage.removeItem(localStorage.key(id))
     }, 200)
@@ -93,7 +91,7 @@ function App() {
                     link={item.link}
                     title={item.title}
                     background={item.background}
-                    onXClickHandler={() => onDeleteHandler(value)}
+                    onXClickHandler={() => onDeleteHandler(item.id)}
                   />
                 )
               })
