@@ -27,18 +27,30 @@ function App() {
         id: jsonBoard.id,
         link: jsonBoard.link,
         title: jsonBoard.title,
-        background: jsonBoard.background
+        background: jsonBoard.background,
+        createdDate: jsonBoard.date
       }])
     }
+    // board.sort((a, b) => a.createdDate - b.createdDate)
   }, [])
   
   const createNewBoard = () => {
     const color = rndColor()
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    const hour = String(today.getHours()).padStart(2, '0');
+    const minute = String(today.getMinutes()).padStart(2, '0');
+    const second = String(today.getSeconds()).padStart(2, '0');
+    const millisecond = String(today.getMilliseconds()).padStart(2, '0');
+    const fullDate = year + '.' + month + '.' + day + '.' + hour + '.' + minute + '.' + second + '.' + millisecond;
     const newBoard = {
       id: small_id,
       link: small_id,
       title: inputBoardName,
-      background: color
+      background: color,
+      createdDate: fullDate
     }
     const jsonBoard = JSON.stringify(newBoard)
     setBoard([...board, {
@@ -46,6 +58,7 @@ function App() {
       link: newBoard.link,
       title: newBoard.title,
       background: newBoard.background,
+      createdDate: newBoard.date
     }])
 
     localStorage.setItem(newBoard.id, jsonBoard)
@@ -56,10 +69,16 @@ function App() {
 
   const onDeleteHandler = (id) => {
     setTimeout(() => {
-      setBoard(board.filter(board => {
-        return board.id !== id
-      }))
-      localStorage.removeItem(localStorage.key(id))
+      for(let i = 0; i < localStorage.length; i++) {
+        let boards = localStorage.getItem(localStorage.key(i))
+        let jsonBoard = JSON.parse(boards)
+        if(jsonBoard.id == id) {
+          localStorage.removeItem(localStorage.key(i))
+          setBoard(board.filter(board => {
+            return board.id !== jsonBoard.id
+          }))
+        }
+      }
     }, 200)
   }
 
@@ -70,19 +89,18 @@ function App() {
           <img src='logo192.png' className="App-logo my-4" alt="logo" />
           <div className='d-flex mt-4'>
             <input className='form-control form-control-lg w-50 me-2'
-              type="text" defaultValue={inputBoardName}
-              onChange={e => setInputBoardName(e.target.value)}
+              type="text" defaultValue={ inputBoardName }
+              onChange={ e => setInputBoardName(e.target.value) }
               placeholder='Введите название доски' />
             <button className='btn btn-success btn-lg' onClick={(e) => createNewBoard(e)}
-              disabled={
-              inputBoardName !== inputBoardName.trim() || inputBoardName === ''
-              ? true : false}>Создать доску</button>
+              disabled={ inputBoardName !== inputBoardName.trim() || inputBoardName === ''
+              ? true : false }>Создать доску</button>
           </div>
           <div className='d-flex mt-4 flex-wrap'>
             {
               board.length === 0 ?
                 <h1 className='fs-1 fw-light text-black-50 mx-auto text-dark'>
-                  Empty <i className="bi-x-lg fs-3"></i>
+                  Empty
                 </h1> :
               board.map((item, value) => {
                 return (
@@ -91,6 +109,7 @@ function App() {
                     link={item.link}
                     title={item.title}
                     background={item.background}
+                    createdDate={item.date}
                     onXClickHandler={() => onDeleteHandler(item.id)}
                   />
                 )
