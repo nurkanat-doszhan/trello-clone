@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Board from './Boards/Board';
 import { v4 as uuid } from 'uuid';
+import 'animate.css';
 
 const rndColor = () => {
   let newColor = '';
@@ -28,10 +29,10 @@ function App() {
         link: jsonBoard.link,
         title: jsonBoard.title,
         background: jsonBoard.background,
-        createdDate: jsonBoard.date
+        createdDate: jsonBoard.createdDate
       }])
+      // jsonBoard.sort((a, b) => a.createdDate - b.createdDate)
     }
-    // board.sort((a, b) => a.createdDate - b.createdDate)
   }, [])
   
   const createNewBoard = () => {
@@ -43,8 +44,9 @@ function App() {
     const hour = String(today.getHours()).padStart(2, '0');
     const minute = String(today.getMinutes()).padStart(2, '0');
     const second = String(today.getSeconds()).padStart(2, '0');
-    const millisecond = String(today.getMilliseconds()).padStart(2, '0');
-    const fullDate = year + '.' + month + '.' + day + '.' + hour + '.' + minute + '.' + second + '.' + millisecond;
+    const millisecond = String(today.getMilliseconds()).padStart(3, '0');
+    // const fullDate = day + '.' + month + '.' + year + ' ' + hour + ':' + minute + ':' + second + '.' + millisecond;
+    const fullDate = day + month + year + hour + minute + second + millisecond;
     const newBoard = {
       id: small_id,
       link: small_id,
@@ -58,7 +60,7 @@ function App() {
       link: newBoard.link,
       title: newBoard.title,
       background: newBoard.background,
-      createdDate: newBoard.date
+      createdDate: newBoard.createdDate
     }])
 
     localStorage.setItem(newBoard.id, jsonBoard)
@@ -72,7 +74,7 @@ function App() {
       for(let i = 0; i < localStorage.length; i++) {
         let boards = localStorage.getItem(localStorage.key(i))
         let jsonBoard = JSON.parse(boards)
-        if(jsonBoard.id == id) {
+        if(jsonBoard.id === id) {
           localStorage.removeItem(localStorage.key(i))
           setBoard(board.filter(board => {
             return board.id !== jsonBoard.id
@@ -103,13 +105,14 @@ function App() {
                   Empty
                 </h1> :
               board.map((item, value) => {
+                console.log(item)
                 return (
                   <Board key={value}
                     id={item.id}
                     link={item.link}
                     title={item.title}
                     background={item.background}
-                    createdDate={item.date}
+                    createdDate={item.createdDate}
                     onXClickHandler={() => onDeleteHandler(item.id)}
                   />
                 )
