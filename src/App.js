@@ -66,7 +66,7 @@ function App() {
 
   /// ***** Доделать правильную сортировку после обновления стр ***** ///
 
-  const onDeleteHandler = (id) => {
+  const onDeleteHandler = (e, id) => {
     setTimeout(() => {
       for(let i = 0; i < localStorage.length; i++) {
         let boards = localStorage.getItem(localStorage.key(i))
@@ -79,6 +79,7 @@ function App() {
         }
       }
     }, 200)
+    e.preventDefault();
   }
 
   const Home = () => {
@@ -104,7 +105,7 @@ function App() {
                     id={item.id}
                     background={item.background}
                     createdDate={item.createdDate}
-                    onXClickHandler={() => onDeleteHandler(item.id)}
+                    onXClickHandler={(e) => onDeleteHandler(e, item.id)}
                   />
                 </Link>
               )
@@ -112,6 +113,13 @@ function App() {
           }
         </div>
       </div>
+    )
+  }
+
+  const Here = (props) => {
+    // console.log(props)
+    return (
+      <h2>{props.url}</h2>
     )
   }
 
@@ -124,6 +132,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="about" element={<AboutPage />} /> */}
+          <Route path={'8e61fe16'} element={<Here url={board.id} />} />
+          { console.log(board) }
         </Routes>
       </div>
     </div>
