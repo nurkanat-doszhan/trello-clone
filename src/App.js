@@ -6,7 +6,7 @@ import 'animate.css';
 
 const rndColor = () => {
   let newColor = '';
-  const rndWords = [ 'a', 'b', 'c', 'd', '2', '3', '4', '5', '6', '7', '8', '9' ]
+  const rndWords = [ 'a', 'b', 'c', 'd', '4', '5', '6', '7', '8', '9' ]
   for(let i = 0; i < 6; i++) {
     newColor += rndWords[Math.floor(Math.random() * rndWords.length)];
   }
