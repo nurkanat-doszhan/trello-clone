@@ -34,31 +34,30 @@ function App() {
       // jsonBoard.sort((a, b) => a.createdDate - b.createdDate)
     }
   }, [])
-  
+
   const createNewBoard = () => {
     const color = rndColor()
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, '0');
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = today.getFullYear();
-    const hour = String(today.getHours()).padStart(2, '0');
-    const minute = String(today.getMinutes()).padStart(2, '0');
-    const second = String(today.getSeconds()).padStart(2, '0');
-    const millisecond = String(today.getMilliseconds()).padStart(3, '0');
-    // const fullDate = day + '.' + month + '.' + year + ' ' + hour + ':' + minute + ':' + second + '.' + millisecond;
-    const fullDate = day + month + year + hour + minute + second + millisecond;
+    const today = new Date()
+    const day = String(today.getDate()).padStart(2, '0')
+    const month = String(today.getMonth() + 1).padStart(2, '0')
+    const year = today.getFullYear()
+    const hour = String(today.getHours()).padStart(2, '0')
+    const minute = String(today.getMinutes()).padStart(2, '0')
+    const second = String(today.getSeconds()).padStart(2, '0')
+    const millisecond = String(today.getMilliseconds()).padStart(3, '0')
+    const fullDate = day + '.' + month + '.' + year + ' ' + hour + ':' + minute + ':' + second + '.' + millisecond
     const newBoard = {
+      title: inputBoardName,
       id: small_id,
       link: small_id,
-      title: inputBoardName,
       background: color,
       createdDate: fullDate
     }
     const jsonBoard = JSON.stringify(newBoard)
     setBoard([...board, {
+      title: newBoard.title,
       id: newBoard.id,
       link: newBoard.link,
-      title: newBoard.title,
       background: newBoard.background,
       createdDate: newBoard.createdDate
     }])
@@ -88,7 +87,7 @@ function App() {
     <div className="App">
       <div className="main">
         <div className='container'>
-          <img src='logo192.png' className="App-logo my-4" alt="logo" />
+          <img src='logo192.png' className="App-logo m-4" alt="logo" />
           <div className='d-flex mt-4'>
             <input className='form-control form-control-lg w-50 me-2'
               type="text" defaultValue={ inputBoardName }
@@ -108,9 +107,9 @@ function App() {
                 console.log(item)
                 return (
                   <Board key={value}
+                    title={item.title}
                     id={item.id}
                     link={item.link}
-                    title={item.title}
                     background={item.background}
                     createdDate={item.createdDate}
                     onXClickHandler={() => onDeleteHandler(item.id)}
