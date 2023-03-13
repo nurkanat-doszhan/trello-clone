@@ -4,6 +4,7 @@ import Board from './Boards/Board';
 import { v4 as uuid } from 'uuid';
 import 'animate.css';
 import { Link, Route, Routes } from "react-router-dom";
+import BoardPage from './BoardPage/BoardPage';
 
 const rndColor = () => {
   let newColor = '';
@@ -39,13 +40,13 @@ function App() {
     const color = rndColor()
     const today = new Date()
     const day = String(today.getDate()).padStart(2, '0')
-    const month = String(today.getMonth() + 1).padStart(2, '0')
+    const mon = String(today.getMonth() + 1).padStart(2, '0')
     const year = today.getFullYear()
-    const hour = String(today.getHours()).padStart(2, '0')
-    const minute = String(today.getMinutes()).padStart(2, '0')
-    const second = String(today.getSeconds()).padStart(2, '0')
-    const millisecond = String(today.getMilliseconds()).padStart(3, '0')
-    const fullDate = day + '.' + month + '.' + year + ' ' + hour + ':' + minute + ':' + second + '.' + millisecond
+    const h = String(today.getHours()).padStart(2, '0')
+    const m = String(today.getMinutes()).padStart(2, '0')
+    const s = String(today.getSeconds()).padStart(2, '0')
+    const ms = String(today.getMilliseconds()).padStart(3, '0')
+    const fullDate = day+'.'+mon+'.'+year+' '+h+':'+m+':'+s+'.'+ms
     const newBoard = {
       title: inputBoardName,
       id: small_id,
@@ -63,8 +64,6 @@ function App() {
     localStorage.setItem(newBoard.id, jsonBoard)
     setInputBoardName('')
   }
-
-  /// ***** Доделать правильную сортировку после обновления стр ***** ///
 
   const onDeleteHandler = (e, id) => {
     setTimeout(() => {
@@ -116,12 +115,7 @@ function App() {
     )
   }
 
-  const Here = (props) => {
-    // console.log(props)
-    return (
-      <h2>{props.url}</h2>
-    )
-  }
+  /// ***** Доделать правильную сортировку после обновления стр ***** ///
 
   return (
     <div className="App">
@@ -132,8 +126,20 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="about" element={<AboutPage />} /> */}
-          <Route path={'8e61fe16'} element={<Here url={board.id} />} />
-          { console.log(board) }
+          {
+            board.map((item, value) => {
+              console.log(item.title)
+              return (
+                <Route key={value} path={item.id} element={
+                  <BoardPage
+                    title={item.title}
+                    background={item.background}
+                    createdDate={item.createdDate}
+                  />
+                } />
+              )
+            })
+          }
         </Routes>
       </div>
     </div>
