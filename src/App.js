@@ -55,8 +55,8 @@ function App() {
     }
     const jsonBoard = JSON.stringify(newBoard)
     setBoard([...board, {
-      title: newBoard.title,
       id: newBoard.id,
+      title: newBoard.title,
       background: newBoard.background,
       createdDate: newBoard.createdDate
     }])
@@ -100,8 +100,8 @@ function App() {
               return (
                 <Link key={value} to={item.id} className="card-link me-3 mb-3">
                   <Board
-                    title={item.title}
                     id={item.id}
+                    title={item.title}
                     background={item.background}
                     createdDate={item.createdDate}
                     onXClickHandler={(e) => onDeleteHandler(e, item.id)}
@@ -128,10 +128,10 @@ function App() {
           {/* <Route path="about" element={<AboutPage />} /> */}
           {
             board.map((item, value) => {
-              console.log(item.title)
               return (
                 <Route key={value} path={item.id} element={
                   <BoardPage
+                    id={item.id}
                     title={item.title}
                     background={item.background}
                     createdDate={item.createdDate}

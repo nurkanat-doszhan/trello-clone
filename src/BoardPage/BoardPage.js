@@ -1,22 +1,99 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { v4 as uuid } from 'uuid'
 
 const BoardPage = (props) => {
-  const [inp, setInp] = useState(false)
-  let date = props.createdDate
-  let btnText = `Создать список`
-  return (
-    <div style={{backgroundColor: "#" + props.background}}>
-      <h2>{props.title}</h2>
-      <small>{date.slice(0, 10)}</small>
-      <div className='container d-flex'>
-        <button className='btn btn-large btn-primary d-flex align-items-center'
-        onClick={() => {setInp(true)}}>
-        {
-          inp ?
-          <input type='text' />
-          : btnText + <i className="bi-plus fs-4" />
-        }
+  const [addListBtn, setAddListBtn] = useState(false)
+  const [inpVal, setInpVal] = useState('')
+  const [list, setList] = useState([])
+  const unique_id = uuid()
+  const small_id = unique_id.slice(0,8)
+
+  useEffect(() => {
+    const loc = JSON.parse(localStorage.getItem(props.id))
+    // console.log(loc)
+  })
+  
+  const AddNewCard = () => {
+    if(!addListBtn) {
+      return (
+        <button className='btn btn-primary text-center' style={{ width: '260px' }}
+          onClick={() => {setAddListBtn(true)}}>
+          <i className="bi-plus fs-6"/> Создать список
         </button>
+      )
+    } else {
+      return (
+        <div className="d-flex flex-column align-items-start
+          p-1 bg-light border border-success border-opacity-50 rounded">
+          <input required autoFocus onChange={e => setInpVal(e.target.value)}
+            className="form-control" defaultValue={inpVal} type='text' style={{ width: '260px' }} />
+          <div className="mt-2 w-100 d-flex align-items-start">
+            <button className="btn btn-primary btn-md me-2" onClick={() => {
+              addList();
+              setAddListBtn(false);
+              setInpVal('')}}>Добавить список</button>
+            <span onClick={() => {setAddListBtn(false); setInpVal('')}} style={{ cursor: 'pointer' }}>
+              <i className="bi-x fs-4 text-dark" />
+            </span>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  const addList = () => {
+    const data = JSON.parse(localStorage.getItem(props.id))
+    const newList = {
+      id: small_id,
+      title: inpVal,
+      tasks: [],
+    }
+    setList([...list, {
+      newList: {
+        id: newList.id,
+        title: newList.title,
+        tasks: newList.tasks,
+        addNewTask: false
+      }
+    }])
+    let n = data.card;
+    n = new Array;
+    n.join(newList)
+    // data.card = newList;
+    for(let i=0; i<data.card.length; i++) {
+      console.log(i)
+    }
+    console.log(data)
+    // localStorage.setItem(data.id, JSON.stringify(data))
+  }
+
+  const Card = (props) => {
+    return (
+      <div className="d-flex flex-column align-items-start p-1 bg-light border border-success border-opacity-50 rounded">
+        <h3 className="text-dark">{props.title}</h3>
+        <textarea required autoFocus className="form-control" type='text' style={{ width: '200px' }} />
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <div style={{backgroundColor: "#" + props.background}}>
+        <h2>{props.title}</h2>
+        <small>{props.createdDate.slice(0, 10)}</small>
+      </div>
+      <div className='container d-flex align-items-start'>
+        {
+          list.map((i, v) => {
+            return (
+              <Card
+                key={v}
+                title={i.title}
+              />
+            )
+          })
+        }
+        <AddNewCard />
       </div>
     </div>
   )
