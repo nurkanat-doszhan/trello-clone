@@ -10,35 +10,20 @@ const BoardPage = (props) => {
 
   useEffect(() => {
     const loc = JSON.parse(localStorage.getItem(props.id))
-    // console.log(loc)
   })
 
   const addList = () => {
     const data = JSON.parse(localStorage.getItem(props.id))
-    const newList = {
+    data.card = []
+    data.card.push(...data.card, {
       id: small_id,
       title: inpVal,
-      tasks: [],
-    }
+      tasks: []
+    })
     setList([...list, {
-      newList: {
-        id: newList.id,
-        title: newList.title,
-        tasks: newList.tasks,
-        addNewTask: false
-      }
+      data
     }])
-    let n = data.card;
-    n = new Array;
-    n.join(newList)
-    // data.card = newList;
-    // console.log(n)
-    // console.log(newList)
-    // for(let i=0; i<data.card.length; i++) {
-    //   console.log(i)
-    // }
-    // console.log(data)
-    // localStorage.setItem(data.id, JSON.stringify(data))
+    localStorage.setItem(data.id, JSON.stringify(data))
   }
   
   const AddNewCard = () => {
@@ -70,10 +55,9 @@ const BoardPage = (props) => {
   }
 
   const Card = (props) => {
-    console.log(props)
     return (
       <div className="d-flex flex-column align-items-start p-1 bg-light border border-success border-opacity-50 rounded">
-        <h3 className="text-dark">{list.id}</h3>
+        <h3 className="text-dark">{props.title}</h3>
         <textarea required autoFocus className="form-control" type='text' style={{ width: '200px' }} />
       </div>
     )
