@@ -9,17 +9,27 @@ const BoardPage = (props) => {
   const small_id = unique_id.slice(0,8)
 
   useEffect(() => {
-    const loc = JSON.parse(localStorage.getItem(props.id))
-  })
+    // for (let i = 0; i < localStorage.length; i++) {
+      // let loc = localStorage.getItem(localStorage.key(props.id))
+      // let jsonList = JSON.parse(loc)
+      // setList((list) => [...list, {
+        // id: jsonList.id,
+        // title: jsonList.title,
+        // tasks: jsonList.tasks
+      // }])
+    // }
+  }, [])
 
   const addList = () => {
     const data = JSON.parse(localStorage.getItem(props.id))
     data.card = []
-    data.card.push(...data.card, {
+    let s = {
       id: small_id,
       title: inpVal,
       tasks: []
-    })
+    }
+    data.card.push(...list, s)
+    console.log(list)
     setList([...list, {
       data
     }])
@@ -72,6 +82,7 @@ const BoardPage = (props) => {
       <div className='container d-flex align-items-start mt-2 flex-wrap'>
         {
           list.map((i, v) => {
+            console.log(i)
             return (
               <Card
                 key={v}
