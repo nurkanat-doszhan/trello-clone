@@ -67,8 +67,6 @@ const BoardPage = (props) => {
 
   const deleteCard = (id) => {
     for(let i = 0; i < data.card.length; i++) {
-      let lists = localStorage.getItem(localStorage.key(data.card))
-      let jsonList = JSON.parse(lists)
       if(data.card[i].id === id) {
         data.card.splice(i, i)
         localStorage.setItem(data.id, JSON.stringify(data))
