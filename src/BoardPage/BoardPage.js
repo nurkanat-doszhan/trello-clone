@@ -8,10 +8,8 @@ const BoardPage = (props) => {
   const unique_id = uuid()
   const small_id = unique_id.slice(0,8)
   const data = JSON.parse(localStorage.getItem(props.id))
-  data.card = []
   
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(props.id))
     for (let i = 0; i < data.card.length; i++) {
       setList((list) => [...list, {
         id: data.card[i].id,
@@ -32,8 +30,9 @@ const BoardPage = (props) => {
       title: newList.title,
       tasks: newList.tasks
     }])
-    data.card.push(...list, newList)
+    data.card.push(newList)
     localStorage.setItem(data.id, JSON.stringify(data))
+    setInpVal('')
   }
   
   const AddNewCard = () => {
@@ -81,7 +80,6 @@ const BoardPage = (props) => {
       </div>
       <div className='container d-flex align-items-start mt-2 flex-wrap'>
         {
-          // list.length === 0 ? <span className='text-empty'>empty</span> :
           list.map((i, v) => {
             return (
               <Card

@@ -50,14 +50,16 @@ function App() {
       title: inputBoardName,
       id: small_id,
       background: color,
-      createdDate: fullDate
+      createdDate: fullDate,
+      card: []
     }
     const jsonBoard = JSON.stringify(newBoard)
     setBoard([...board, {
       id: newBoard.id,
       title: newBoard.title,
       background: newBoard.background,
-      createdDate: newBoard.createdDate
+      createdDate: newBoard.createdDate,
+      card: newBoard.card
     }])
 
     localStorage.setItem(newBoard.id, jsonBoard)
@@ -103,6 +105,7 @@ function App() {
                     title={item.title}
                     background={item.background}
                     createdDate={item.createdDate}
+                    card={item.card}
                     onXClickHandler={(e) => onDeleteHandler(e, item.id)}
                   />
                 </Link>
