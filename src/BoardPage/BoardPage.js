@@ -70,9 +70,8 @@ const BoardPage = (props) => {
       let lists = localStorage.getItem(localStorage.key(data.card))
       let jsonList = JSON.parse(lists)
       if(data.card[i].id === id) {
-        // localStorage.getItem(localStorage.key(i))
-        data.card.splice(i, i);
-        console.log(data.card)
+        data.card.splice(i, i)
+        localStorage.setItem(data.id, JSON.stringify(data))
         setList(list.filter(list => {
           return list.id != id
         }))
@@ -82,7 +81,7 @@ const BoardPage = (props) => {
 
   const Card = (props) => {
     return (
-      <div className="d-flex flex-column align-items-start p-1 bg-light border border-success border-opacity-50 rounded">
+      <div className="d-flex flex-column align-items-start p-1 bg-light border border-success border-opacity-50 mb-2 me-2 rounded">
         <div className="w-100 d-flex justify-content-between">
           <h4 className="text-dark">{props.title}</h4>
           <span onClick={() => {deleteCard(props.id)}} style={{ cursor: 'pointer' }}>
