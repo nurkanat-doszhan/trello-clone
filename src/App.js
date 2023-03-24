@@ -25,7 +25,6 @@ function App() {
     for (let i = 0; i < localStorage.length; i++) {
       let boards = localStorage.getItem(localStorage.key(i))
       let jsonBoard = JSON.parse(boards)
-
       setBoard((board) => [...board, {
         id: jsonBoard.id,
         title: jsonBoard.title,
