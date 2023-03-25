@@ -126,7 +126,7 @@ function App() {
           <img src='logo192.png' className="App-logo m-4" alt="logo" />
         </Link>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/*" element={<Home />} />
           {/* <Route path="about" element={<AboutPage />} /> */}
           {
             board.map((item, value) => {
