@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { v4 as uuid } from 'uuid'
+import Card from './Card/Card'
 
 const BoardPage = (props) => {
   const [addListBtn, setAddListBtn] = useState(false)
@@ -10,8 +11,6 @@ const BoardPage = (props) => {
   const data = JSON.parse(localStorage.getItem(props.id))
   
   useEffect(() => {
-    console.log(data);
-    console.log(data.card);
     for (let i = 0; i < data.card.length; i++) {
       setList((list) => [...list, {
         id: data.card[i].id,
@@ -68,7 +67,7 @@ const BoardPage = (props) => {
     }
   }
 
-  const deleteCard = (id) => {
+  const onDeleteClick = (id) => {
     for(let i = 0; i < data.card.length; i++) {
       if(data.card[i].id === id) {
         data.card.splice(i, i)
@@ -78,21 +77,6 @@ const BoardPage = (props) => {
         }))
       }
     }
-  }
-
-  const Card = (props) => {
-    return (
-      <div className="d-flex flex-column align-items-start p-1 mb-2 me-2 rounded
-        bg-light border border-success border-opacity-50" style={{ width: '240px' }}>
-        <div className="w-100 d-flex justify-content-between">
-          <h4 className="text-dark">{props.title}</h4>
-          <span onClick={() => {deleteCard(props.id)}} style={{ cursor: 'pointer' }}>
-            <i className="bi-x fs-4 text-dark" />
-          </span>
-        </div>
-        <textarea required autoFocus className="form-control" type='text' />
-      </div>
-    )
   }
 
   return (
@@ -110,6 +94,7 @@ const BoardPage = (props) => {
                 id={i.id}
                 title={i.title}
                 tasks={i.tasks}
+                deleteCard={id => onDeleteClick(i.id)}
               />
             )
           })
