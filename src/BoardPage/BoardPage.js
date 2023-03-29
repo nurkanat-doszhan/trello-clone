@@ -10,6 +10,8 @@ const BoardPage = (props) => {
   const data = JSON.parse(localStorage.getItem(props.id))
   
   useEffect(() => {
+    console.log(data);
+    console.log(data.card);
     for (let i = 0; i < data.card.length; i++) {
       setList((list) => [...list, {
         id: data.card[i].id,
@@ -38,23 +40,24 @@ const BoardPage = (props) => {
   const AddNewCard = () => {
     if(!addListBtn) {
       return (
-        <button className='btn btn-primary text-center' style={{ width: '200px' }}
+        <button className='btn btn-primary text-center' style={{ width: '240px' }}
           onClick={() => {setAddListBtn(true)}}>
           <i className="bi-plus fs-6"/> Создать список
         </button>
       )
     } else {
       return (
-        <div className="d-flex flex-column align-items-start
-          p-1 bg-light border border-success border-opacity-50 rounded">
+        <div className="d-flex flex-column align-items-start rounded bg-light
+          border border-success border-opacity-50 p-1" style={{ width: '240px' }}>
           <input required autoFocus onChange={e => setInpVal(e.target.value)}
-            className="form-control" defaultValue={inpVal} type='text' style={{ width: '200px' }} />
+            className="form-control" defaultValue={inpVal} type='text' />
           <div className="mt-2 w-100 d-flex align-items-start">
-            <button className="btn btn-primary btn-md me-2" onClick={() => {
-              addList();
-              setAddListBtn(false);
-              setInpVal('')}}
-              disabled={ inpVal !== inpVal.trim() || inpVal === ''
+            <button className="btn btn-primary btn-md me-2 flex-grow-1"
+              onClick={() => {
+                addList();
+                setAddListBtn(false);
+                setInpVal('')}}
+                disabled={ inpVal !== inpVal.trim() || inpVal === ''
               ? true : false }>Добавить список</button>
             <span onClick={() => {setAddListBtn(false); setInpVal('')}} style={{ cursor: 'pointer' }}>
               <i className="bi-x fs-4 text-dark" />
@@ -79,14 +82,15 @@ const BoardPage = (props) => {
 
   const Card = (props) => {
     return (
-      <div className="d-flex flex-column align-items-start p-1 bg-light border border-success border-opacity-50 mb-2 me-2 rounded">
+      <div className="d-flex flex-column align-items-start p-1 mb-2 me-2 rounded
+        bg-light border border-success border-opacity-50" style={{ width: '240px' }}>
         <div className="w-100 d-flex justify-content-between">
           <h4 className="text-dark">{props.title}</h4>
           <span onClick={() => {deleteCard(props.id)}} style={{ cursor: 'pointer' }}>
             <i className="bi-x fs-4 text-dark" />
           </span>
         </div>
-        <textarea required autoFocus className="form-control" type='text' style={{ width: '200px' }} />
+        <textarea required autoFocus className="form-control" type='text' />
       </div>
     )
   }
